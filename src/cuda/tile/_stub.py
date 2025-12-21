@@ -1808,6 +1808,22 @@ def where(cond, x, y, /) -> Tile:
 
 
 @function
+def clip(x, min_val, max_val, /) -> Tile:
+    """Clips elements to the range [min_val, max_val].
+
+    Args:
+        x (Tile): Input tile.
+        min_val (TileOrScalar): Lower bound.
+        max_val (TileOrScalar): Upper bound.
+
+    Returns:
+        Tile:
+    """
+    low_clamped = where(x < min_val, min_val, x)
+    return where(low_clamped > max_val, max_val, low_clamped)
+
+
+@function
 def extract(x, /, index, shape) -> Tile:
     """Extracts a smaller tile from input tile.
 
